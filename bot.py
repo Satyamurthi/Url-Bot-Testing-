@@ -5,6 +5,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 import os
+from pyrogram import Client
 
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
@@ -28,5 +29,17 @@ if __name__ == "__main__" :
         api_hash=Config.API_HASH,
         plugins=plugins
     )
-    Config.AUTH_USERS
-    app.run()
+        async def start(self):
+        await super().start()
+        me = await self.get_me()
+        self.set_parse_mode("html")
+        self.LOGGER(__name__).info(
+            f"@{me.username}  started! "
+        )
+
+    async def stop(self, *args):
+        await super().stop()
+        self.LOGGER(__name__).info("Bot stopped. Bye.")
+    
+Config.AUTH_USERS
+app.run()
