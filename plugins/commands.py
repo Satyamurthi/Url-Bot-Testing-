@@ -51,9 +51,22 @@ async def get_me_info(bot, update):
         reply_markup=Translation.ABOUT_BUTTONS
     )
     
-# ------------------------------- Broadcast Message --------------------------------- #
-    
-@Client.on_message(filters.private & filters.command('sen'))
+# ------------------------------- View Subscribers --------------------------------- #
+@Client.on_message(filters.private & filters.command('subscribers'))
+async def subscribers_count(bot, m: Message):
+    id = m.from_user.id
+    if id not in Config.AUTH_USERS:
+        return
+    msg = await m.reply_text(Presets.WAIT_MSG)
+    messages = await users_info(bot)
+    active = messages[0]
+    blocked = messages[1]
+    await m.delete()
+    await msg.edit(Presets.USERS_LIST.format(active, blocked))
+
+
+# ------------------------ Send messages to subs ----------------------------- #
+@Client.on_message(filters.private & filters.command('send'))
 async def send_text(bot, m: Message):
     id = m.from_user.id
     if id not in Config.AUTH_USERS:
