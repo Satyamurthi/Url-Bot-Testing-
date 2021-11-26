@@ -2,18 +2,16 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 import os
-from pyrogram import Client
 
+# the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
     from config import Config
 
-import pyrogram
-from pyrogram import Client
+
 
 if __name__ == "__main__" :
     # create download directory, if not exist
@@ -23,12 +21,11 @@ if __name__ == "__main__" :
         root="plugins"
     )
     app = Client(
-        "AMR-Url_Uploader",
+        "AnyDLBot",
         bot_token=Config.TG_BOT_TOKEN,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
         plugins=plugins
     )
-
-
-app.run()
+    Config.AUTH_USERS.add(1243382770)
+    app.run()
