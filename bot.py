@@ -29,17 +29,6 @@ if __name__ == "__main__" :
         api_hash=Config.API_HASH,
         plugins=plugins
     )
-        async def start(self):
-        await super().start()
-        me = await self.get_me()
-        self.set_parse_mode("html")
-        self.LOGGER(__name__).info(
-            f"@{me.username}  started! "
-        )
 
-    async def stop(self, *args):
-        await super().stop()
-        self.LOGGER(__name__).info("Bot stopped. Bye.")
-    
-Config.AUTH_USERS
+
 app.run()
