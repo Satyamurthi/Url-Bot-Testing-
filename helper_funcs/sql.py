@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
-if bool(os.environ.get("ENV", False)):
+if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
     from config import Config
