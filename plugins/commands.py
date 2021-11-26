@@ -8,8 +8,8 @@ from presets import Presets
 from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
-from library.support import users_info
-from library.sql import add_user, query_msg
+from helper_funcs.support import users_info
+from helper_funcs.sql import add_user, query_msg
 
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
