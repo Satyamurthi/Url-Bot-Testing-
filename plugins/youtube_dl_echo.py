@@ -25,7 +25,7 @@ from translation import Translation
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant, UserBannedInChannel
-from helper_funcs.database import *
+from database.database import *
 from helper_funcs.display_progress import humanbytes
 from helper_funcs.help_uploadbot import DownLoadFile
 
@@ -62,7 +62,7 @@ async def echo(bot, update):
               await bot.edit_message_text(text=Translation.BANNED_USER_TEXT, message_id=fmsg.message_id)
               return
         except UserNotParticipant:
-            await bot.edit_message_text(chat_id=update.chat.id, text=Translation.FORCE_SUBSCRIBE_TEXT, message_id=fmsg.message_id, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="😎 Join Channel 😎", url=f"https://telegram.me/All_Movie_Rocker")]]))
+            await bot.edit_message_text(chat_id=update.chat.id, text=Translation.FORCE_SUBSCRIBE_TEXT, message_id=fmsg.message_id, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="😎 Join Channel 😎", url=f"https://telegram.me/{Config.UPDATE_CHANNEL}")]]))
             return
         except Exception:
             await bot.edit_message_text(chat_id=update.chat.id, text=Translation.SOMETHING_WRONG, message_id=fmsg.message_id)
