@@ -39,13 +39,13 @@
       "description": "To get logs",
       "value": "0"
     },
-    "DEF_WATER_MARK_FILE": {
-      "description": "Set any name(Optional)",
-      "value": "0"
-    },
     "SUPPORT_CHAT": {
       "description": "Public group / channel username of the discussion chat (include - @)",
       "required": false
+    },
+    "DEF_WATER_MARK_FILE": {
+      "description": "Set any name(Optional)",
+      "value": "0"
     },
     "DEF_THUMB_NAIL_VID_S": {
       "description": "default thumbnail to be used in the videos. Incase, youtube-dl is unable to find a thumbnail.",
