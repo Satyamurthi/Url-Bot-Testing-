@@ -7,28 +7,13 @@ import shutil
 import string
 import asyncio
 
-from presets import Presets
-from translation import Translation
-from helper_funcs.support import users_info
-from helper_funcs.sql import add_user, query_msg
 
+from translation import Translation
 
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
     from config import Config
-    
-LOG_CHANNEL = Config.LOG_CHANNEL
-AUTH_USERS = Config.AUTH_USERS
-DB_URL = Config.DB_URL
-DB_NAME = Config.DB_NAME
-
-db = Database(DB_URL, DB_NAME)
-
-    
-from pyrogram import Client, filters
-from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, Message
-from pyrogram.errors import FloodWait
 
 
 # ------------------------------- Start Message --------------------------------- #
