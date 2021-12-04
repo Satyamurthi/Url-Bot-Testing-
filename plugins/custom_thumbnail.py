@@ -9,11 +9,15 @@ from pyrogram import Client, filters
 
 from translation import Translation
 
-import helper_funcs.database as sql
-from helper_funcs.database import *
+import database.database as sql
+from database.database import *
 
 
-@Client.on_message(filters.private & filters.photo)
+@Client.on_message(
+    filters.private &
+    filters.photo &
+    filters.user(Config.AUTH_USERS) if Config.PRIVATE else None
+)
 async def save_photo(bot, update):
     if update.media_group_id is not None:
         # album is sent
@@ -41,7 +45,11 @@ async def save_photo(bot, update):
         )
 
 
-@Client.on_message(filters.private & filters.command(["delthumb"]))
+@Client.on_message(
+    filters.private &
+    filters.command(["delthumb"]) &
+    filters.user(Config.AUTH_USERS) if Config.PRIVATE else None
+)
 async def delete_thumbnail(bot, update):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     #download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
@@ -60,7 +68,11 @@ async def delete_thumbnail(bot, update):
 
 
 
-@Client.on_message(filters.private & filters.command(["showthumb"]))
+@Client.on_message(
+    filters.private &
+    filters.command(["showthumb"]) &
+    filters.user(Config.AUTH_USERS) if Config.PRIVATE else None
+)
 async def show_thumb(bot, update):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     if not os.path.exists(thumb_image_path):
