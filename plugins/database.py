@@ -1,104 +1,89 @@
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-import asyncio
 import datetime
-import os
-import random
-import string
-import time
-import traceback
 
-import aiofiles
-from pyrogram.errors import (
-    FloodWait,
-    InputUserDeactivated,
-    PeerIdInvalid,
-    UserIsBlocked,
-)
-
-if bool(os.environ.get("WEBHOOK", False)):
-    from sample_config import Config
-else:
-    from config import Config
-
-broadcast_ids = {}
-
-BROADCAST_AS_COPY = Config.BROADCAST_AS_COPY
+import motor.motor_asyncio
 
 
-async def send_msg(user_id, message):
-    try:
-        if BROADCAST_AS_COPY is False:
-            await message.forward(chat_id=user_id)
-        elif BROADCAST_AS_COPY is True:
-            await message.copy(chat_id=user_id)
-        return 200, None
-    except FloodWait as e:
-        await asyncio.sleep(e.x)
-        return send_msg(user_id, message)
-    except InputUserDeactivated:
-        return 400, f"{user_id} : deactivated\n"
-    except UserIsBlocked:
-        return 400, f"{user_id} : blocked the bot\n"
-    except PeerIdInvalid:
-        return 400, f"{user_id} : user id invalid\n"
-    except Exception:
-        return 500, f"{user_id} : {traceback.format_exc()}\n"
+class Database:
+    def __init__(self, uri, database_name):
+        self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
+        self.db = self._client[database_name]
+        self.col = self.db.users
 
-
-async def broadcast(m, db):
-    all_users = await db.get_all_notif_user()
-    broadcast_msg = m.reply_to_message
-    while True:
-        broadcast_id = "".join([random.choice(string.ascii_letters) for i in range(3)])
-        if not broadcast_ids.get(broadcast_id):
-            break
-    out = await m.reply_text(
-        text=f"Broadcast Started! You will be notified with log file when all the users are notified."
-    )
-    start_time = time.time()
-    total_users = await db.total_users_count()
-    done = 0
-    failed = 0
-    success = 0
-    broadcast_ids[broadcast_id] = dict(
-        total=total_users, current=done, failed=failed, success=success
-    )
-    async with aiofiles.open("broadcast.txt", "w") as broadcast_log_file:
-        async for user in all_users:
-            sts, msg = await send_msg(user_id=int(user["id"]), message=broadcast_msg)
-            if msg is not None:
-                await broadcast_log_file.write(msg)
-            if sts == 200:
-                success += 1
-            else:
-                failed += 1
-            if sts == 400:
-                await db.delete_user(user["id"])
-            done += 1
-            if broadcast_ids.get(broadcast_id) is None:
-                break
-            else:
-                broadcast_ids[broadcast_id].update(
-                    dict(current=done, failed=failed, success=success)
-                )
-    if broadcast_ids.get(broadcast_id):
-        broadcast_ids.pop(broadcast_id)
-    completed_in = datetime.timedelta(seconds=int(time.time() - start_time))
-    await asyncio.sleep(3)
-    await out.delete()
-    if failed == 0:
-        await m.reply_text(
-            text=f"broadcast completed in `{completed_in}`\n\nTotal users {total_users}.\nTotal done {done}, {success} success and {failed} failed.",
-            quote=True,
+    def new_user(self, id):
+        return dict(
+            id=id,
+            join_date=datetime.date.today().isoformat(),
+            notif=True,
+            ban_status=dict(
+                is_banned=False,
+                ban_duration=0,
+                banned_on=datetime.date.max.isoformat(),
+                ban_reason="",
+            ),
         )
-    else:
-        await m.reply_document(
-            document="broadcast.txt",
-            caption=f"broadcast completed in `{completed_in}`\n\nTotal users {total_users}.\nTotal done {done}, {success} success and {failed} failed.",
-            quote=True,
+
+    async def add_user(self, id):
+        user = self.new_user(id)
+        await self.col.insert_one(user)
+
+    async def is_user_exist(self, id):
+        user = await self.col.find_one({"id": int(id)})
+        return True if user else False
+
+    async def total_users_count(self):
+        count = await self.col.count_documents({})
+        return count
+
+    async def get_all_users(self):
+        all_users = self.col.find({})
+        return all_users
+
+    async def delete_user(self, user_id):
+        await self.col.delete_many({"id": int(user_id)})
+
+    async def remove_ban(self, id):
+        ban_status = dict(
+            is_banned=False,
+            ban_duration=0,
+            banned_on=datetime.date.max.isoformat(),
+            ban_reason="",
         )
+        await self.col.update_one({"id": id}, {"$set": {"ban_status": ban_status}})
+
+    async def ban_user(self, user_id, ban_duration, ban_reason):
+        ban_status = dict(
+            is_banned=True,
+            ban_duration=ban_duration,
+            banned_on=datetime.date.today().isoformat(),
+            ban_reason=ban_reason,
+        )
+        await self.col.update_one({"id": user_id}, {"$set": {"ban_status": ban_status}})
+
+    async def get_ban_status(self, id):
+        default = dict(
+            is_banned=False,
+            ban_duration=0,
+            banned_on=datetime.date.max.isoformat(),
+            ban_reason="",
+        )
+        user = await self.col.find_one({"id": int(id)})
+        return user.get("ban_status", default)
+
+    async def get_all_banned_users(self):
+        banned_users = self.col.find({"ban_status.is_banned": True})
+        return banned_users
+
+    async def set_notif(self, id, notif):
+        await self.col.update_one({"id": id}, {"$set": {"notif": notif}})
+
+    async def get_notif(self, id):
+        user = await self.col.find_one({"id": int(id)})
+        return user.get("notif", False)
+
+    async def get_all_notif_user(self):
+        notif_users = self.col.find({"notif": True})
+        return notif_users
+
+    async def total_notif_users_count(self):
+        count = await self.col.count_documents({"notif": True})
+        return count
