@@ -7,6 +7,7 @@ import shutil
 import string
 import asyncio
 
+from pyrogram import Client, filters    
 
 from translation import Translation
 
