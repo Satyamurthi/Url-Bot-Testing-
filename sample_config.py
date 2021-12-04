@@ -57,7 +57,7 @@ class Config(object):
     UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", "")
     
     # Log channel for banning spammers
-    LOG_CHANNEL = os.environ.get("LOG_CHANNEL", "")
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
 
     # maximum message length in Telegram
     MAX_MESSAGE_LENGTH = 4096
@@ -72,8 +72,10 @@ class Config(object):
     DEF_WATER_MARK_FILE = ""
 
     # Sql Database url
-    DB_URI = os.environ.get("DATABASE_URL", "")
-
+    DB_URL = os.environ.get("DB_URL", "")
+    
+    DB_NAME = os.environ.get("DB_NAME", "BroadcastBot")
+    
     # the download location, where the HTTP Server runs
     DOWNLOAD_LOCATION = "./DOWNLOADS"
     
