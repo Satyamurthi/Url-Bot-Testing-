@@ -1,9 +1,14 @@
 {
   "name": "URL-Uploader",
   "description": "An url uploader bot with permenent thumbnail support",
+  "logo": "",
   "keywords": [
     "telegram",
     "url",
+    "bot",
+    "broadcast Bot",
+    "Telegram Bot",
+    "NacBots",
     "uploader",
     "pyrogram"
   ],
@@ -29,21 +34,15 @@
     },
     "BROADCAST_AS_COPY": {
       "description": "Value should be True or False. Broadcast with Forward Tag or as Copy.(Without Forward Tag)",
-      "value": "True",
-      "required": false
     },
     "DB_URL": {
       "description": "MongoDB.com database url",
-      "required": true
     },
     "DB_NAME": {
       "description": "A database name without white space(example : broadcastbot)",
-      "value": "BroadcastBot",
-      "required": false
     },
     "LOG_CHANNEL": {
       "description": "ID of a Channel which you want to RECEIVE LOGS.",
-      "required": false
     },
     "TIME_LIMIT": {
       "description": "Set timeout for subprocess (In seconds)",
