@@ -7,10 +7,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 from plugins.database import Database
 
-if bool(os.environ.get("WEBHOOK", False)):
-    from sample_config import Config
-else:
-    from config import Config
+from sample_config import Config
 
 DB_URL = Config.DB_URL
 DB_NAME = Config.DB_NAME
