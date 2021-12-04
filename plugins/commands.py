@@ -15,10 +15,10 @@ from plugins.broadcast import broadcast
 from plugins.check_user import handle_user_status
 from plugins.database import Database
 
-LOG_CHANNEL = config.LOG_CHANNEL
-AUTH_USERS = config.AUTH_USERS
-DB_URL = config.DB_URL
-DB_NAME = config.DB_NAME
+LOG_CHANNEL = Config.LOG_CHANNEL
+AUTH_USERS = Config.AUTH_USERS
+DB_URL = Config.DB_URL
+DB_NAME = Config.DB_NAME
 
 db = Database(DB_URL, DB_NAME)
 
