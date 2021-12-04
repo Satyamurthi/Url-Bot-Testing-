@@ -17,7 +17,7 @@ if __name__ == "__main__" :
     app = Client(
         "URL Uploader",
         bot_token=Config.TG_BOT_TOKEN,
-        api_id=Config.APP_ID,
+        api_id=Config.API_ID,
         api_hash=Config.API_HASH,
         plugins=plugins
     )
