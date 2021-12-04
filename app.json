@@ -33,16 +33,16 @@
       "description": "Create a list of User Ids to use this bot(ADMINS). Seperate by space. At least one required"
     },
     "BROADCAST_AS_COPY": {
-      "description": "Value should be True or False. Broadcast with Forward Tag or as Copy.(Without Forward Tag)",
+      "description": "Value should be True or False. Broadcast with Forward Tag or as Copy.(Without Forward Tag)"
     },
     "DB_URL": {
-      "description": "MongoDB.com database url",
+      "description": "MongoDB.com database url"
     },
     "DB_NAME": {
-      "description": "A database name without white space(example : broadcastbot)",
+      "description": "A database name without white space(example : broadcastbot)"
     },
     "LOG_CHANNEL": {
-      "description": "ID of a Channel which you want to RECEIVE LOGS.",
+      "description": "ID of a Channel which you want to RECEIVE LOGS."
     },
     "TIME_LIMIT": {
       "description": "Set timeout for subprocess (In seconds)",
@@ -53,7 +53,7 @@
     {
       "plan": "heroku-postgresql",
         "options": {
-          "version": "12"
+          "version": "13"
         }
       }
   ],
