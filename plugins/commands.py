@@ -40,7 +40,7 @@ async def start(bot, update):
         disable_web_page_preview=True,
         reply_markup=Translation.START_BUTTONS
     )
-    
+
 # ------------------------------- Help Message --------------------------------- #
 
 @Client.on_message(filters.command(["help"]) & filters.private)
