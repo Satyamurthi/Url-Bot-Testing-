@@ -1,34 +1,14 @@
 import os
-import logging
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s - %(levelname)s] - %(message)s",
-    datefmt='%d-%b-%y %H:%M:%S'
-)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 class Config(object):
 
     # get a token from @BotFather
-    TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
+    TG_BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 
-        # Get from my.telegram.org
-    APP_ID = int(os.environ.get("APP_ID", ""))
-
-    # Get from my.telegram.org
-    API_HASH = os.environ.get("API_HASH", "")
-
-    # Group / channel username of the support chat
-    SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", "")
-    
-    #Session Name
-    SESSION_NAME = os.environ.get("SESSION_NAME", "Rename-Bot-0")
-    
-    MONGODB_URI = os.environ.get("MONGODB_URI", "")
-    
-    #Owner ID
-    BOT_OWNER = os.environ.get("BOT_OWNER", "")
+    # The Telegram API things
+    # Get these values from my.telegram.org
+    API_ID = int(os.environ.get("API_ID", 12345))
+    API_HASH = os.environ.get("API_HASH")
 
     # Array to store users who are authorized to use the bot
     AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USERS", "").split())
@@ -78,13 +58,4 @@ class Config(object):
     
     DB_NAME = os.environ.get("DB_NAME", "BroadcastBot")
     
-    # the download location, where the HTTP Server runs
-    DOWNLOAD_LOCATION = "./DOWNLOADS"
-    
-    # Banned Unwanted Members..
-    BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "").split())
-    
     BROADCAST_AS_COPY = bool(os.environ.get("BROADCAST_AS_COPY", True))
-    
-def LOGGER(name: str) -> logging.Logger:
-    return logging.getLogger(name)
