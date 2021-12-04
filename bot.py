@@ -1,17 +1,10 @@
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 import os
 
-# the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
     from config import Config
 
-import pyrogram
 from pyrogram import Client
 
 if __name__ == "__main__" :
@@ -22,11 +15,11 @@ if __name__ == "__main__" :
         root="plugins"
     )
     app = Client(
-        "AnyDLBot",
+        "URL Uploader",
         bot_token=Config.TG_BOT_TOKEN,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
         plugins=plugins
     )
-    Config.AUTH_USERS.add(1243382770)
+    Config.AUTH_USERS
     app.run()
