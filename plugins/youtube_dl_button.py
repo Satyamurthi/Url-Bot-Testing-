@@ -132,11 +132,11 @@ async def youtube_dl_call_back(bot, update):
     if youtube_dl_password is not None:
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
+    command_to_exec.append("--no-warnings")
     if "hotstar" in youtube_dl_url:
         command_to_exec.append("--geo-bypass-country")
         command_to_exec.append("IN")
-    command_to_exec.append("--no-warnings")
-    
+
     start = datetime.now()
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
