@@ -25,7 +25,7 @@ from translation import Translation
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant, UserBannedInChannel
-from helper_funcs.database import *
+from database.database import *
 from helper_funcs.display_progress import humanbytes
 from helper_funcs.help_uploadbot import DownLoadFile
 
@@ -34,16 +34,19 @@ from hachoir.parser import createParser
 from datetime import datetime
 from PIL import Image
 
-@Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
+@Client.on_message(
+    filters.private &
+    filters.regex(pattern=".*http.*") &
+    filters.user(Config.AUTH_USERS) if Config.PRIVATE else None
+)
 async def echo(bot, update):
     if Config.LOG_CHANNEL:
         try:
-            log_message = await message.forward(Config.LOG_CHANNEL)
+            log_message = await update.forward(Config.LOG_CHANNEL)
             log_info = "Message Sender Information\n"
             log_info += "\nFirst Name: " + update.from_user.first_name
-            log_info += "\nUser ID: " + update.from_user.id
-            if update.from_user.username:
-                log_info += "\nUsername: " + update.from_user.username
+            log_info += "\nUser ID: " + str(update.from_user.id)
+            log_info += "\nUsername: @" + update.from_user.username if update.from_user.username else ""
             log_info += "\nUser Link: " + update.from_user.mention
             await log_message.reply_text(
                 text=log_info,
