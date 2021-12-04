@@ -72,6 +72,8 @@ class Config(object):
     DEF_WATER_MARK_FILE = ""
 
     # Sql Database url
+    DB_URI = os.environ.get("DATABASE_URL", "")
+    
     DB_URL = os.environ.get("DB_URL", "")
     
     DB_NAME = os.environ.get("DB_NAME", "BroadcastBot")
