@@ -44,7 +44,7 @@
     "LOG_CHANNEL": {
       "description": "ID of a Channel which you want to RECEIVE LOGS.",
       "required": false
-    }
+    },
     "TIME_LIMIT": {
       "description": "Set timeout for subprocess (In seconds)",
       "value": "0"
