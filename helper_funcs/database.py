@@ -41,12 +41,7 @@ def insert(chat_id):
             	dbcol.insert_one(user_det)
             except:
             	pass
-
-def addthumb(chat_id, file_id):
-	dbcol.update_one({"_id":chat_id},{"$set":{"file_id":file_id}})
 	
-def delthumb(chat_id):
-	dbcol.update_one({"_id":chat_id},{"$set":{"file_id":None}})
 	
 def find(chat_id):
 	id =  {"_id":chat_id}
