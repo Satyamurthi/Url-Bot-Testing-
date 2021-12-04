@@ -20,3 +20,4 @@ psutil
 tgcrypto
 motor
 datetime
+pymongo
