@@ -15,6 +15,11 @@ from plugins.broadcast import broadcast
 from plugins.check_user import handle_user_status
 from plugins.database import Database
 
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
+    
 LOG_CHANNEL = Config.LOG_CHANNEL
 AUTH_USERS = Config.AUTH_USERS
 DB_URL = Config.DB_URL
@@ -22,11 +27,6 @@ DB_NAME = Config.DB_NAME
 
 db = Database(DB_URL, DB_NAME)
 
-
-if bool(os.environ.get("WEBHOOK", False)):
-    from sample_config import Config
-else:
-    from config import Config
     
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, Message
