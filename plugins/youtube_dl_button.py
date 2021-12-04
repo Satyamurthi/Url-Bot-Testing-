@@ -229,7 +229,7 @@ async def youtube_dl_call_back(bot, update):
                     img.resize((90, height))
                 img.save(thumb_image_path, "JPEG")
             else:
-                thumb_image_path = None
+                thumb_image_path = Config.DEF_THUMB_NAIL_VID_S
 
             start_time = time.time()
             if tg_send_type == "audio":
@@ -242,7 +242,7 @@ async def youtube_dl_call_back(bot, update):
                     duration=duration,
                     # performer=response_json["uploader"],
                     # title=response_json["title"],
-                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/All_Movie_Rocker')]]),
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')]]),
                     thumb=thumb_image_path,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -259,7 +259,7 @@ async def youtube_dl_call_back(bot, update):
                     thumb=thumb_image_path,
                     caption=description,
                     parse_mode="HTML",
-                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/All_Movie_Rocker')]]),
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')]]),
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -296,7 +296,7 @@ async def youtube_dl_call_back(bot, update):
                     width=width,
                     height=height,
                     supports_streaming=True,
-                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/All_Movie_Rocker')]]),
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')]]),
                     thumb=thumb_image_path,
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
@@ -343,6 +343,10 @@ async def youtube_dl_call_back(bot, update):
                     )
             try:
                 shutil.rmtree(tmp_directory_for_each_user)   
+            except:
+                pass 
+            try:
+                os.remove(download_directory)
             except:
                 pass
             try:
