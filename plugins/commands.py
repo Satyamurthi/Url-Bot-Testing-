@@ -2,6 +2,8 @@ import os
 import traceback
 import logging
 import time
+import shutil
+import string
 import asyncio
 
 from pyrogram import Client
