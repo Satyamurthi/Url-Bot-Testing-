@@ -20,7 +20,7 @@
       "description": "Leave this as it is!",
       "value": "ANYTHING"
     },
-    "BOT_TOKEN": {
+    "TG_BOT_TOKEN": {
       "description": "Your bot token from @botfather, as a string."
     },
     "API_ID": {
@@ -35,14 +35,22 @@
     "BROADCAST_AS_COPY": {
       "description": "Value should be True or False. Broadcast with Forward Tag or as Copy.(Without Forward Tag)"
     },
-    "DB_URL": {
+    "DB_URI": {
       "description": "MongoDB.com database url"
     },
-    "DB_NAME": {
+    "SESSION_NAME": {
       "description": "A database name without white space(example : broadcastbot)"
     },
     "LOG_CHANNEL": {
       "description": "ID of a Channel which you want to RECEIVE LOGS."
+    },
+    "UPDATE_CHANNEL"
+      "description": "Name of a Channel without @  which you want to Force Subscribe."
+    },
+    "PRIVATE": {
+      "description": "True or False for private use",
+      "value": "False",
+      "required": false
     },
     "TIME_LIMIT": {
       "description": "Set timeout for subprocess (In seconds)",
