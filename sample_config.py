@@ -64,4 +64,4 @@ class Config(object):
     DB_URI = os.environ.get("DATABASE_URL", "")
     
     # database uri (mongodb)
-    DATABASE_URL = os.environ.get("DATABASE_URL", "")
+    DB_URL = os.environ.get("DATABASE_URL", "")
