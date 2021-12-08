@@ -7,8 +7,11 @@ class Config(object):
 
     # The Telegram API things
     # Get these values from my.telegram.org
-    API_ID = int(os.environ.get("API_ID"))
+    APP_ID = int(os.environ.get("APP_ID"))
     API_HASH = os.environ.get("API_HASH")
+    
+    # your telegram id
+    OWNER_ID = int(os.environ.get("OWNER_ID", ""))
 
     # For private use 
     PRIVATE = bool(os.environ.get("PRIVATE", False))
@@ -37,13 +40,16 @@ class Config(object):
     HTTP_PROXY = os.environ.get("HTTP_PROXY", "")
     
     # Update channel for Force Subscribe
-    UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", None)
+    UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL",)
     
     # Log channel for banning spammers
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", None))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL",))
 
     # maximum message length in Telegram
     MAX_MESSAGE_LENGTH = 4096
+    
+    # database session name, example: xurluploader
+    SESSION_NAME = os.environ.get("SESSION_NAME", "")
 
     # set timeout for subprocess
     PROCESS_MAX_TIMEOUT = int(os.environ.get("TIME_LIMIT", 0))
@@ -57,8 +63,3 @@ class Config(object):
     # Sql Database url
     DB_URI = os.environ.get("DATABASE_URL", "")
     
-    DB_URL = os.environ.get("DB_URL", "")
-    
-    DB_NAME = os.environ.get("DB_NAME", "BroadcastBot")
-    
-    BROADCAST_AS_COPY = bool(os.environ.get("BROADCAST_AS_COPY", True))
