@@ -13,5 +13,11 @@ requests
 tgcrypto
 youtube-dl
 aiofiles
-motor
+requests
 dnspython
+git+git://github.com/ytdl-org/youtube-dl.git
+git+git://github.com/mongodb/motor.git
+yt-dlp
+olefile
+filetype
+tldextract
